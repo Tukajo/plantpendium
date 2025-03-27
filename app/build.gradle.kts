@@ -47,6 +47,7 @@ kapt {
 }
 
 dependencies {
+    implementation(project(":feature-plant-list"))
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.core.ktx)
