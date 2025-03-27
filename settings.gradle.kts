@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "plantpendium"
 include(":app")
- 
+include(":feature-plant-list")
+include(":networking")
