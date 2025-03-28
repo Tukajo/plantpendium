@@ -41,6 +41,7 @@ kapt {
     correctErrorTypes = true
 }
 dependencies {
+    implementation(libs.androidx.lifecycle.runtime.compose) // Or the latest version
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(project(":networking"))

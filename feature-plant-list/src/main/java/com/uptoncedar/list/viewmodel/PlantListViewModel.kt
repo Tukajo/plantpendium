@@ -19,14 +19,11 @@ class PlantListViewModel @Inject constructor(
 
     private val _plants = MutableStateFlow<List<Plant>>(emptyList())
     val plants: StateFlow<List<Plant>> = _plants.asStateFlow()
-    init {
-        fetchPlants()
-    }
 
-    private fun fetchPlants() {
+    fun searchPlants(query: String) {
         viewModelScope.launch {
             try {
-                val newPlants = getPlantsByQueryUseCase("snow white")
+                val newPlants = getPlantsByQueryUseCase(query)
                 _plants.emit(newPlants)
             } catch (e: Exception) {
                 // TODO, handle this error.
