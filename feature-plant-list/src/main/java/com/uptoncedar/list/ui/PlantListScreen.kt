@@ -10,7 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 
 
-
 @Composable
 fun PlantListScreen(
     modifier: Modifier = Modifier,

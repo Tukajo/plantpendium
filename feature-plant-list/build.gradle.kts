@@ -41,6 +41,8 @@ kapt {
     correctErrorTypes = true
 }
 dependencies {
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
     implementation(project(":networking"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
