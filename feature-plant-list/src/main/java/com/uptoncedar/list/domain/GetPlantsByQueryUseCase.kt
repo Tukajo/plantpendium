@@ -12,7 +12,7 @@ class GetPlantsByQueryUseCaseImpl @Inject constructor(
     private val floraCodexApi: FloraCodexApi
 ): GetPlantsByQueryUseCase {
     override suspend operator fun invoke(query: String): List<Plant> {
-        val res = floraCodexApi.getPlants(query)
+        val res = floraCodexApi.getPlants(query=query)
         return when (res.isSuccessful) {
             true -> res.body()?.data ?: emptyList()
             else -> {

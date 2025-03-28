@@ -16,8 +16,6 @@ fun PlantListScreen(
     modifier: Modifier = Modifier,
     viewModel: PlantListViewModel = hiltViewModel()
 ) {
-
-
     val plants by viewModel.plants.collectAsStateWithLifecycle()
 
     Column(modifier = modifier) {
@@ -33,4 +31,3 @@ fun PlantListScreen(
         }
     }
 }
-

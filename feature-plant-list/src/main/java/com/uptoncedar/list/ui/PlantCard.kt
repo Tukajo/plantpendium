@@ -40,17 +40,21 @@ fun PlantCard(
             Column(
                 modifier = Modifier.padding(8.dp)
             ) {
-                Text(
-                    text = plant.common_name,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
+                plant.common_name?.let {
+                    Text(
+                        text = it,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
+                }
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = plant.scientific_name,
-                    fontSize = 14.sp,
-                    color = Color.Gray
-                )
+                plant.scientific_name?.let {
+                    Text(
+                        text = it,
+                        fontSize = 14.sp,
+                        color = Color.Gray
+                    )
+                }
             }
         }
     }

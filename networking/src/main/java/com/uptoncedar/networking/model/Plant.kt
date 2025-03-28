@@ -3,9 +3,9 @@ package com.uptoncedar.networking.model
 data class Plant(
     val id: String,
     val author: String,
-    val common_name: String,
+    val common_name: String?,
     val slug: String,
-    val scientific_name: String,
+    val scientific_name: String?,
     val status: String,
     val rank: String,
     val family: String,
