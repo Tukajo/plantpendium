@@ -8,7 +8,10 @@ import androidx.compose.material3.Text
 
 
 @Composable
-fun PlantListScreen(modifier: Modifier = Modifier, viewModel: PlantListViewModel = hiltViewModel<PlantListViewModel>()) {
+fun PlantListScreen(
+    modifier: Modifier = Modifier,
+    viewModel: PlantListViewModel = hiltViewModel()
+) {
     Text(
         text = "Hello!",
         modifier = modifier
