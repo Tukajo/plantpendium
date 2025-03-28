@@ -4,6 +4,7 @@
     <bytecodeTargetLevel target="11">
       <module name="plantpendium.app" target="21" />
       <module name="plantpendium.feature-plant-list" target="21" />
+      <module name="plantpendium.networking" target="21" />
     </bytecodeTargetLevel>
   </component>
 </project>

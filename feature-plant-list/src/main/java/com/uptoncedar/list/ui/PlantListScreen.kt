@@ -9,9 +9,8 @@ import androidx.compose.material3.Text
 
 @Composable
 fun PlantListScreen(modifier: Modifier = Modifier, viewModel: PlantListViewModel = hiltViewModel<PlantListViewModel>()) {
-    val nameTemp: String = viewModel.getName()
     Text(
-        text = "Hello $nameTemp!",
+        text = "Hello!",
         modifier = modifier
     )
 
