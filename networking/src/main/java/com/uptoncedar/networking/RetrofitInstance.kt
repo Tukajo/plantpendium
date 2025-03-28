@@ -11,7 +11,7 @@ object RetrofitInstance {
     val api: FloraCodexApi by lazy {
 
         val apiKey =
-            "SECRET" // TODO This traffic would either need to be proxied through a secure server, or built in such a way that we don't expose the key.
+            "***REMOVED***" // TODO This traffic would either need to be proxied through a secure server, or built in such a way that we don't expose the key.
         val okhttpClient = OkHttpClient.Builder()
             .addInterceptor(ApiKeyInterceptor(apiKey))
             .build()

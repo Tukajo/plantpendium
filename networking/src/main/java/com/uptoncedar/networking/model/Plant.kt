@@ -13,7 +13,7 @@ data class Plant(
     val genus_id: String,
     val image_url: String,
     val links: Links,
-    val meta: Meta
+    val meta: PlantMeta
 )
 
 data class Links(
@@ -22,6 +22,6 @@ data class Links(
     val plant: String
 )
 
-data class Meta(
+data class PlantMeta(
     val last_modified: String
 )
