@@ -21,7 +21,7 @@ import com.uptoncedar.common.R
 @Composable
 fun FillingImage(
     modifier: Modifier = Modifier,
-    imageUrl: String,
+    imageUrl: String? = "",
     imageDescription: String? = ""
 ) {
     SubcomposeAsyncImage(
