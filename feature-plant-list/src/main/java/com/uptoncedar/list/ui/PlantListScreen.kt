@@ -9,11 +9,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.uptoncedar.list.viewmodel.PlantListViewModel
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.uptoncedar.networking.model.PlantListEntry
 
 
 @Composable
 fun PlantListScreen(
     modifier: Modifier = Modifier,
+    onNavigateToDetails: (plantId: String) -> Unit,
     viewModel: PlantListViewModel = hiltViewModel()
 ) {
     val plants by viewModel.plants.collectAsStateWithLifecycle()
@@ -22,11 +24,13 @@ fun PlantListScreen(
         PlantListSearchBar(
             onSearchSubmit = {
                 viewModel.searchPlants(it)
-            }
-        )
+            })
         LazyColumn {
             items(plants) {
-                PlantCard(it)
+                PlantCard(
+                    plantListEntry = it,
+                    onNavigateToDetails = onNavigateToDetails
+                )
             }
         }
     }

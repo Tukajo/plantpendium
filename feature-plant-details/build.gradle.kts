@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.uptoncedar.list"
+    namespace = "com.uptoncedar.plant.details"
     compileSdk = 35
 
     defaultConfig {
@@ -29,10 +29,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
-    buildFeatures{
-        compose = true
-    }
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -41,10 +37,10 @@ kapt {
     correctErrorTypes = true
 }
 dependencies {
+    implementation(project(":networking"))
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
-    implementation(project(":networking"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

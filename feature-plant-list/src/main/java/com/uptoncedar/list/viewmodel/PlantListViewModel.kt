@@ -4,7 +4,7 @@ package com.uptoncedar.list.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.uptoncedar.list.domain.GetPlantsByQueryUseCase
-import com.uptoncedar.networking.model.Plant
+import com.uptoncedar.networking.model.PlantListEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,8 +17,8 @@ class PlantListViewModel @Inject constructor(
     private val getPlantsByQueryUseCase: GetPlantsByQueryUseCase
 ) : ViewModel() {
 
-    private val _plants = MutableStateFlow<List<Plant>>(emptyList())
-    val plants: StateFlow<List<Plant>> = _plants.asStateFlow()
+    private val _plants = MutableStateFlow<List<PlantListEntry>>(emptyList())
+    val plants: StateFlow<List<PlantListEntry>> = _plants.asStateFlow()
 
     fun searchPlants(query: String) {
         viewModelScope.launch {

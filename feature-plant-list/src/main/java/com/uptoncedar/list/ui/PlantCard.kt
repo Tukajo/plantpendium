@@ -2,12 +2,10 @@ package com.uptoncedar.list.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,16 +16,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.SubcomposeAsyncImage
-import com.uptoncedar.networking.model.Plant
+import com.uptoncedar.networking.model.PlantListEntry
 
 @Composable
 fun PlantCard(
-    plant: Plant
+    plantListEntry: PlantListEntry,
+    onNavigateToDetails: (plantId: String) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .padding(8.dp)
             .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp))
+            .clickable { onNavigateToDetails(plantListEntry.id) }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -35,8 +35,8 @@ fun PlantCard(
         ) {
             SubcomposeAsyncImage(
                 modifier = Modifier.size(100.dp),
-                model = plant.image_url,
-                contentDescription = plant.scientific_name,
+                model = plantListEntry.image_url,
+                contentDescription = plantListEntry.scientific_name,
                 loading = {
                     CircularProgressIndicator()
                 },
@@ -52,7 +52,7 @@ fun PlantCard(
             Column(
                 modifier = Modifier.padding(8.dp)
             ) {
-                plant.common_name?.let {
+                plantListEntry.common_name?.let {
                     Text(
                         text = it,
                         fontWeight = FontWeight.Bold,
@@ -60,7 +60,7 @@ fun PlantCard(
                     )
                 }
                 Spacer(modifier = Modifier.height(4.dp))
-                plant.scientific_name?.let {
+                plantListEntry.scientific_name?.let {
                     Text(
                         text = it,
                         fontSize = 14.sp,
