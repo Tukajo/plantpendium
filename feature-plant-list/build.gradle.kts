@@ -41,6 +41,8 @@ kapt {
     correctErrorTypes = true
 }
 dependencies {
+    implementation(libs.ui.tooling.preview)
+    implementation(libs.ui.tooling)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)

@@ -25,6 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PlantpendiumTheme {
+
                 val navController = rememberNavController()
                 Scaffold(
                     modifier = Modifier.fillMaxSize(), topBar = {
