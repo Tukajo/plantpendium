@@ -37,7 +37,10 @@ fun PlantCard(
             Column(
                 modifier = Modifier.width(120.dp)
             ) {
-                FillingImage(plantListEntry=plantListEntry)
+                FillingImage(
+                    imageUrl = plantListEntry.image_url,
+                    imageDescription = plantListEntry.scientific_name
+                )
             }
             Column(
                 modifier = Modifier

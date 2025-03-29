@@ -1,4 +1,5 @@
 package com.uptoncedar.common.ui
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,7 +12,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import coil3.compose.SubcomposeAsyncImage
 import com.uptoncedar.common.R
-import com.uptoncedar.common.model.PlantListEntry
 
 
 /**
@@ -19,15 +19,16 @@ import com.uptoncedar.common.model.PlantListEntry
  */
 @Composable
 fun FillingImage(
-    plantListEntry: PlantListEntry,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    imageUrl: String,
+    imageDescription: String? = ""
 ) {
     SubcomposeAsyncImage(
         modifier = modifier
             .fillMaxHeight()
             .fillMaxWidth(),
-        model = plantListEntry.image_url,
-        contentDescription = plantListEntry.scientific_name,
+        model = imageUrl,
+        contentDescription = imageDescription,
         loading = {
             CircularProgressIndicator()
         },
