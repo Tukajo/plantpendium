@@ -1,8 +1,8 @@
 package com.uptoncedar.networking.api
 
+import com.uptoncedar.common.model.PlantDetails
+import com.uptoncedar.common.model.PlantListEntry
 import com.uptoncedar.networking.model.PaginatedModel
-import com.uptoncedar.networking.model.PlantDetails
-import com.uptoncedar.networking.model.PlantListEntry
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

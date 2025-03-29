@@ -3,8 +3,8 @@ package com.uptoncedar.list.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.uptoncedar.common.model.PlantListEntry
 import com.uptoncedar.list.domain.GetPlantsByQueryUseCase
-import com.uptoncedar.networking.model.PlantListEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

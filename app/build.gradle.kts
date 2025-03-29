@@ -49,7 +49,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(project(":feature-plant-list"))
     implementation(project(":feature-plant-details"))
-    implementation(project(":networking"))
+    implementation(project(":common"))
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.core.ktx)

@@ -41,12 +41,15 @@ kapt {
     correctErrorTypes = true
 }
 dependencies {
+    // Other Projects:
+    implementation(project(":common"))
+    implementation(project(":networking"))
+
     implementation(libs.ui.tooling.preview)
     implementation(libs.ui.tooling)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
-    implementation(project(":networking"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

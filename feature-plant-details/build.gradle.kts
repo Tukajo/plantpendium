@@ -33,11 +33,16 @@ android {
         jvmTarget = "11"
     }
 }
+
 kapt {
     correctErrorTypes = true
 }
+
 dependencies {
+    // Other Projects:
+    implementation(project(":common"))
     implementation(project(":networking"))
+
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)

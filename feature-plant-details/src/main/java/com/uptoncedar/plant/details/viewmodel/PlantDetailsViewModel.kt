@@ -2,8 +2,8 @@ package com.uptoncedar.plant.details.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.uptoncedar.common.model.PlantDetails
 import com.uptoncedar.plant.details.domain.GetPlantByIdUseCase
-import com.uptoncedar.networking.model.PlantDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

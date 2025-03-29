@@ -1,11 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.uptoncedar.networking"
+    namespace = "com.uptoncedar.common"
     compileSdk = 35
 
     defaultConfig {
@@ -38,10 +39,16 @@ kapt {
 }
 
 dependencies {
-    // Other Projects
-    implementation(project(":common"))
-    api(libs.retrofit)
-    implementation(libs.converter.gson)
-    kapt(libs.hilt.android.compiler)
-    implementation(libs.hilt.android)
+    implementation(libs.ui.tooling.preview)
+    implementation(libs.ui.tooling)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

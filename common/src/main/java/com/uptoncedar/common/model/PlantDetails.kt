@@ -1,4 +1,4 @@
-package com.uptoncedar.networking.model
+package com.uptoncedar.common.model
 
 data class PlantDetails(
     val id: String,

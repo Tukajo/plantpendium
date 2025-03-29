@@ -11,11 +11,6 @@ import com.uptoncedar.list.viewmodel.PlantListViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.uptoncedar.list.domain.GetPlantsByQueryUseCase
-import com.uptoncedar.networking.model.Links
-import com.uptoncedar.networking.model.Meta
-import com.uptoncedar.networking.model.PlantListEntry
 
 
 @Composable

@@ -1,7 +1,7 @@
 package com.uptoncedar.plant.details.domain
 
+import com.uptoncedar.common.model.PlantDetails
 import com.uptoncedar.networking.api.FloraCodexApi
-import com.uptoncedar.networking.model.PlantDetails
 import javax.inject.Inject
 
 interface GetPlantByIdUseCase {
