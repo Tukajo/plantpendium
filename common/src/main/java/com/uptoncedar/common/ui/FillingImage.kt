@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.SubcomposeAsyncImage
 import com.uptoncedar.common.R
 
@@ -44,4 +45,38 @@ fun FillingImage(
         },
         contentScale = ContentScale.Crop
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FillingImagePreview() {
+    MaterialTheme {
+        FillingImage(
+            imageUrl = "https://fake.website.com/1.png",
+            imageDescription = "Example Image"
+        )
+    }
+}
+
+@Preview(showBackground = true, widthDp = 200, heightDp = 100)
+@Composable
+fun FillingImageSmallPreview() {
+    MaterialTheme {
+        FillingImage(
+            imageUrl = "https://fake.website.com/1.png",
+            imageDescription = "Small Example"
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Error State")
+@Composable
+fun FillingImageErrorPreview() {
+    MaterialTheme {
+        // Simulate an error by providing an invalid URL or a URL that will fail to load
+        FillingImage(
+            imageUrl = "invalid_url",
+            imageDescription = "Error State Example"
+        )
+    }
 }
