@@ -25,8 +25,8 @@ class PlantListViewModel @Inject constructor(
             try {
                 val newPlants = getPlantsByQueryUseCase(query)
                 _plants.emit(newPlants)
-            } catch (e: Exception) {
-                // TODO, handle this error.
+            } catch (_: Exception) {
+                _plants.emit(emptyList())
             }
         }
     }
