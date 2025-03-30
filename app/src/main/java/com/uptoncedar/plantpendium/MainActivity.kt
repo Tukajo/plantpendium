@@ -7,9 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,6 +21,8 @@ import com.uptoncedar.list.ui.PlantListScreen
 import com.uptoncedar.plant.details.ui.PlantDetailsScreen
 import com.uptoncedar.plantpendium.ui.theme.PlantpendiumTheme
 import dagger.hilt.android.AndroidEntryPoint
+import com.uptoncedar.plant.details.R as detailsR
+import com.uptoncedar.plantpendium.R as mainR
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -36,11 +36,17 @@ class MainActivity : ComponentActivity() {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
 
+                val topBarTitle = when (currentRoute) {
+                    "plantList" -> stringResource(mainR.string.app_name)
+                    "plantDetails/{id}" -> stringResource(detailsR.string.title_plant_details)
+                    else -> stringResource(mainR.string.app_name) // Default title
+                }
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         TopAppBar(
-                            title = { Text(stringResource(R.string.app_name)) },
+                            title = { Text(topBarTitle) },
                             colors = TopAppBarDefaults.topAppBarColors(
                                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                                 titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -57,7 +63,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     },
-                    containerColor = MaterialTheme.colorScheme.background
+                    containerColor = MaterialTheme.colorScheme.background // Set app background color
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
