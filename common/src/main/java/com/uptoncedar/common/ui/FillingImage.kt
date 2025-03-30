@@ -2,7 +2,6 @@ package com.uptoncedar.common.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CircularProgressIndicator
@@ -29,8 +28,7 @@ fun FillingImage(
 ) {
     SubcomposeAsyncImage(
         modifier = modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
+            .fillMaxSize(),
         model = imageUrl,
         contentDescription = imageDescription
             ?: stringResource(R.string.fallback_filling_image_description),
@@ -40,19 +38,17 @@ fun FillingImage(
             }
         },
         error = {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Image(
-                    painter = painterResource(id = R.drawable.image_placeholder_icon),
-                    contentDescription = "Image not available",
-                    modifier = Modifier.fillMaxWidth(0.5f), // Adjust size as needed
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
-                )
-            }
+            Image(
+                painter = painterResource(id = R.drawable.image_placeholder_icon),
+                contentDescription = "Image not available",
+                modifier = Modifier.fillMaxWidth(0.5f), // Adjust size as needed
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
+            )
+
         },
         contentScale = ContentScale.Crop
     )
 }
-
 
 
 @Preview(showBackground = true)
