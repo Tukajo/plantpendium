@@ -1,5 +1,6 @@
 package com.uptoncedar.plant.details.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -9,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.uptoncedar.common.ui.FillingImage
+import com.uptoncedar.common.ui.ZoomableDialog
 import com.uptoncedar.plant.details.viewmodel.PlantDetailsViewModel
 import com.uptoncedar.plant.details.R
 
@@ -16,6 +18,7 @@ import com.uptoncedar.plant.details.R
 fun PlantDetailsScreen(
     viewModel: PlantDetailsViewModel = hiltViewModel(), plantId: String
 ) {
+    var showImageDialog by remember { mutableStateOf(false) }
     val plantDetails by viewModel.plantDetails.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
@@ -45,21 +48,38 @@ fun PlantDetailsScreen(
                     }
                 } else if (plantDetails != null) {
                     plantDetails?.main_species?.image_url?.let { imageUrl ->
-                        ElevatedCard(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 2.dp),
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 8.dp
-                            )
-                        ) {
-                            FillingImage(
-                                imageUrl = imageUrl,
-                                imageDescription = plantDetails?.common_name,
+                        if (showImageDialog) {
+                            ZoomableDialog(
+                                onDismissRequest = { showImageDialog = false }
+                            ) {
+                                FillingImage(
+                                    imageUrl = imageUrl,
+                                    imageDescription = plantDetails?.common_name,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(200.dp),
+                                )
+                            }
+                        } else {
+                            ElevatedCard(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(200.dp)
-                            )
+                                    .padding(vertical = 2.dp)
+                                    .clickable(onClick = {
+                                        showImageDialog = true
+                                    }),
+                                elevation = CardDefaults.cardElevation(
+                                    defaultElevation = 8.dp
+                                )
+                            ) {
+                                FillingImage(
+                                    imageUrl = imageUrl,
+                                    imageDescription = plantDetails?.common_name,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(200.dp),
+                                )
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))

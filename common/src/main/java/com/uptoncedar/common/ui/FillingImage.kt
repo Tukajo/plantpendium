@@ -1,11 +1,14 @@
 package com.uptoncedar.common.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
@@ -14,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.SubcomposeAsyncImage
 import com.uptoncedar.common.R
-
 
 /**
  * The Filling Image is used to fill the container with an image, that will be scaled/cropped accordingly.
@@ -33,21 +35,25 @@ fun FillingImage(
         contentDescription = imageDescription
             ?: stringResource(R.string.fallback_filling_image_description),
         loading = {
-            CircularProgressIndicator()
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         },
         error = {
-            Image(
-                painter = painterResource(id = R.drawable.image_placeholder_icon),
-                contentDescription = "Image not available",
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth(),
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
-            )
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Image(
+                    painter = painterResource(id = R.drawable.image_placeholder_icon),
+                    contentDescription = "Image not available",
+                    modifier = Modifier.fillMaxWidth(0.5f), // Adjust size as needed
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
+                )
+            }
         },
         contentScale = ContentScale.Crop
     )
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
