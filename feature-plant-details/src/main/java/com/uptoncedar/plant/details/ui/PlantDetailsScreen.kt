@@ -17,6 +17,7 @@ import com.uptoncedar.common.ui.FillingImage
 import com.uptoncedar.plant.details.viewmodel.PlantDetailsViewModel
 import com.uptoncedar.plant.details.R
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.core.net.toUri
 
 @Composable
 fun PlantDetailsScreen(
@@ -61,7 +62,7 @@ fun PlantDetailsScreen(
                                     detectTapGestures(
                                         onDoubleTap = {
                                             val intent =
-                                                Intent(Intent.ACTION_VIEW, Uri.parse(imageUrl))
+                                                Intent(Intent.ACTION_VIEW, imageUrl.toUri())
                                             context.startActivity(intent)
                                         }
                                     )
