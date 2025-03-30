@@ -1,6 +1,6 @@
 # Plantpendium
 
-[![demo_screenshot.png](demo_screenshot.png)](demo_screenshot.png)
+<img src="demo/details_screenshot.png" alt="Plantpendium Screenshot" width="1440">
 
 ## About
 Plantpendium FloraCodex API App, in Jetpack Compose.
@@ -9,15 +9,10 @@ Plantpendium FloraCodex API App, in Jetpack Compose.
 **Integration with the FloraCodex API to search, and view plant details.
 
 ## Screenshots
-
-### Main Screen
-[![demo_screenshot.png](demo_screenshot.png)](demo_screenshot.png)
-
 ### Search Functionality
-[![search_main.png](search_main.png)](search_main.png)
-
+<img src="demo/search_main.png" alt="Search Functionality" width="1440">
 ## Usage
-[![demo_usage.gif](demo_usage.gif)](demo_usage.gif)
+<img src="demo/demo_usage.gif" alt="Demo Usage" width="800">
 
 ## FloraCodex
 For more in-depth botanical information, you can also visit [FloraCodex.com](https://floracodex.com).
