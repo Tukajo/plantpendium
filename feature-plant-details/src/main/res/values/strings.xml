@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_plant_details">Plant Details</string>
+    <string name="no_plant_details_found_warning">No plant details found.</string>
     <string name="scientific_classification_section_title">Scientific Classification</string>
     <string name="scientific_name_field_label">Scientific Name:</string>
     <string name="scientific_family_field_label">Family:</string>

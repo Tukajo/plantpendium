@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     },
-                    containerColor = MaterialTheme.colorScheme.background // Set app background color
+                    containerColor = MaterialTheme.colorScheme.background
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,

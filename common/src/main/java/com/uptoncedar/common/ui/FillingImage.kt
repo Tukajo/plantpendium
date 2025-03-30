@@ -75,7 +75,6 @@ fun FillingImageSmallPreview() {
 @Composable
 fun FillingImageErrorPreview() {
     MaterialTheme {
-        // Simulate an error by providing an invalid URL or a URL that will fail to load
         FillingImage(
             imageUrl = "invalid_url",
             imageDescription = "Error State Example"

@@ -46,10 +46,9 @@ fun PlantDetailsScreen(
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Button(onClick = { viewModel.clearError() }) {
-                    Text("Dismiss")
+                    Text(stringResource(android.R.string.ok))
                 }
             } else if (plantDetails != null) {
-                // Image Section
                 plantDetails?.main_species?.image_url?.let { imageUrl ->
                     FillingImage(
                         imageUrl = imageUrl,
@@ -122,9 +121,11 @@ fun PlantDetailsScreen(
                     }
                 }
 
-                // You can add more sections here for other details
             } else {
-                Text("No plant details found.", style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    stringResource(R.string.no_plant_details_found_warning),
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
         }
     }
