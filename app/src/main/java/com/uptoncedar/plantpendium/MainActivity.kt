@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 val topBarTitle = when (currentRoute) {
                     "plantList" -> stringResource(mainR.string.app_name)
                     "plantDetails/{id}" -> stringResource(detailsR.string.title_plant_details)
-                    else -> stringResource(mainR.string.app_name) // Default title
+                    else -> stringResource(mainR.string.app_name)
                 }
 
                 Scaffold(
@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     },
-                    containerColor = MaterialTheme.colorScheme.background // Set app background color
+                    containerColor = MaterialTheme.colorScheme.background
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
