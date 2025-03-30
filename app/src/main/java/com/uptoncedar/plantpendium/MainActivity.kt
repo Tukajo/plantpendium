@@ -5,11 +5,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.uptoncedar.list.ui.PlantListScreen
@@ -25,13 +32,33 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PlantpendiumTheme {
-
                 val navController = rememberNavController()
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
+
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(), topBar = {
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
                         TopAppBar(
-                            title = { Text("Plantpendium") })
-                    }) { innerPadding ->
+                            title = { Text(stringResource(R.string.app_name)) },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            ),
+                            navigationIcon = {
+                                if (currentRoute != "plantList") {
+                                    IconButton(onClick = { navController.popBackStack() }) {
+                                        Icon(
+                                            Icons.AutoMirrored.Filled.ArrowBack,
+                                            stringResource(android.R.string.ok)
+                                        )
+                                    }
+                                }
+                            }
+                        )
+                    },
+                    containerColor = MaterialTheme.colorScheme.background // Set app background color
+                ) { innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = "plantList",
@@ -39,7 +66,6 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable("plantList") {
                             PlantListScreen(onNavigateToDetails = {
-                                // TODO Refactor routes to a cleaner location.
                                 val route = "plantDetails/${it}"
                                 navController.navigate(route)
                             })

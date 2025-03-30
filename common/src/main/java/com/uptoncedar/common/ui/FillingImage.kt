@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.SubcomposeAsyncImage
 import com.uptoncedar.common.R
@@ -22,14 +23,15 @@ import com.uptoncedar.common.R
 fun FillingImage(
     modifier: Modifier = Modifier,
     imageUrl: String? = "",
-    imageDescription: String? = ""
+    imageDescription: String?
 ) {
     SubcomposeAsyncImage(
         modifier = modifier
             .fillMaxHeight()
             .fillMaxWidth(),
         model = imageUrl,
-        contentDescription = imageDescription,
+        contentDescription = imageDescription
+            ?: stringResource(R.string.fallback_filling_image_description),
         loading = {
             CircularProgressIndicator()
         },

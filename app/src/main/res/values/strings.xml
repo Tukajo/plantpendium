@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">plantpendium</string>
+    <string name="app_name">Plantpendium</string>
+    <string name="title_plant_list">Plant List</string>
 </resources>
