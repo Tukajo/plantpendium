@@ -36,7 +36,7 @@ class PlantListViewModelTest {
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(Dispatchers.Unconfined) // Use Unconfined for immediate execution
+        Dispatchers.setMain(Dispatchers.Unconfined)
         viewModel = PlantListViewModel(getPlantsByQueryUseCase)
     }
 
@@ -47,7 +47,6 @@ class PlantListViewModelTest {
 
     @Test
     fun `searchPlants should update plants state with results on success`() = runTest {
-        // Arrange
         val query = "rose"
         val expectedPlants = listOf(
             PlantListEntry(
@@ -89,48 +88,40 @@ class PlantListViewModelTest {
                 )
             ),
         )
+
         `when`(getPlantsByQueryUseCase(query)).thenReturn(expectedPlants)
 
-        // Act
         viewModel.searchPlants(query)
-        advanceUntilIdle() // Wait for the coroutine to complete
+        advanceUntilIdle()
 
-        // Assert
         val actualPlants = viewModel.plants.first()
         assertEquals(expectedPlants, actualPlants)
     }
 
     @Test
     fun `searchPlants should emit empty list when use case returns empty list`() = runTest {
-        // Arrange
         val query = "nonexistent"
         val expectedPlants = emptyList<PlantListEntry>()
         `when`(getPlantsByQueryUseCase(query)).thenReturn(expectedPlants)
 
-        // Act
         viewModel.searchPlants(query)
         advanceUntilIdle()
 
-        // Assert
         val actualPlants = viewModel.plants.first()
         assertEquals(expectedPlants, actualPlants)
     }
 
     @Test
     fun `searchPlants should not update plants state on error`() = runTest {
-        // Arrange
         val query = "error"
         val errorMessage = "Failed to fetch plants"
         `when`(getPlantsByQueryUseCase(query)).thenThrow(RuntimeException(errorMessage))
 
-        // Act
         val initialPlants = viewModel.plants.first()
         viewModel.searchPlants(query)
         advanceUntilIdle()
 
-        // Assert
         val actualPlants = viewModel.plants.first()
-        assertEquals(initialPlants, actualPlants) // Should remain the initial empty list
-        // In a real scenario, you might assert on a separate error state if implemented
+        assertEquals(initialPlants, actualPlants)
     }
 }

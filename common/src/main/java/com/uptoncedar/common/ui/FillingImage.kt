@@ -41,7 +41,6 @@ fun FillingImage(
             Image(
                 painter = painterResource(id = R.drawable.image_placeholder_icon),
                 contentDescription = "Image not available",
-                modifier = Modifier.fillMaxWidth(0.5f), // Adjust size as needed
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
             )
 
