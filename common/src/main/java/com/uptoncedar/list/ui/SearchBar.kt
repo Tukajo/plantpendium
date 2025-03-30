@@ -25,28 +25,28 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PlantListSearchBar(
+fun SearchBar(
     onSearchSubmit: (String) -> Unit
 ) {
     var searchText by remember { mutableStateOf("") }
     Row(
-        modifier = Modifier
+        modifier = Modifier.Companion
             .fillMaxWidth()
             .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.Companion.CenterVertically
     ) {
         OutlinedTextField(
             value = searchText,
             onValueChange = { searchText = it },
             leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Search") },
             placeholder = { Text("Search Plants") },
-            modifier = Modifier.weight(1f),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            modifier = Modifier.Companion.weight(1f),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Companion.Search),
             keyboardActions = KeyboardActions(
                 onSearch = { onSearchSubmit(searchText) }
             )
         )
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.Companion.width(8.dp))
         Button(onClick = { onSearchSubmit(searchText) }) {
             Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Submit Search")
         }

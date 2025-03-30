@@ -22,7 +22,7 @@ fun PlantListScreen(
     val plants by viewModel.plants.collectAsStateWithLifecycle()
 
     Column(modifier = modifier) {
-        PlantListSearchBar(
+        SearchBar(
             onSearchSubmit = {
                 viewModel.searchPlants(it)
             })
