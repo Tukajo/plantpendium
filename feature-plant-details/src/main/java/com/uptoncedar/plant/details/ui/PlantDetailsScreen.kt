@@ -81,14 +81,14 @@ fun PlantDetailsScreen(
                     }
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    Card(modifier = Modifier.fillMaxWidth()) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(
-                                text = stringResource(R.string.common_section_title),
-                                style = MaterialTheme.typography.headlineSmall
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            plantDetails?.common_name?.let {
+                    plantDetails?.common_name?.let {
+                        Card(modifier = Modifier.fillMaxWidth()) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = stringResource(R.string.common_section_title),
+                                    style = MaterialTheme.typography.headlineSmall
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
                                 Row {
                                     Text(
                                         text = stringResource(R.string.common_name_field_label),
