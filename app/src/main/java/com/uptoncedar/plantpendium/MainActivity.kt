@@ -22,7 +22,6 @@ import com.uptoncedar.plant.details.ui.PlantDetailsScreen
 import com.uptoncedar.plantpendium.ui.theme.PlantpendiumTheme
 import dagger.hilt.android.AndroidEntryPoint
 import com.uptoncedar.plant.details.R as detailsR
-import com.uptoncedar.plantpendium.R as mainR
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -37,9 +36,9 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
 
                 val topBarTitle = when (currentRoute) {
-                    "plantList" -> stringResource(mainR.string.app_name)
+                    "plantList" -> stringResource(R.string.app_name)
                     "plantDetails/{id}" -> stringResource(detailsR.string.title_plant_details)
-                    else -> stringResource(mainR.string.app_name)
+                    else -> stringResource(R.string.app_name)
                 }
 
                 Scaffold(
