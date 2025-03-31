@@ -10,10 +10,9 @@ object RetrofitInstance {
     private const val FLORA_API_BASE_URL = "https://api.floracodex.com/v1/"
     val api: FloraCodexApi by lazy {
 
-        val apiKey =
-            "***REMOVED***" // TODO This traffic would either need to be proxied through a secure server, or built in such a way that we don't expose the key.
+        val floraApiKey = BuildConfig.FLORA_API_KEY
         val okhttpClient = OkHttpClient.Builder()
-            .addInterceptor(ApiKeyInterceptor(apiKey))
+            .addInterceptor(ApiKeyInterceptor(floraApiKey))
             .build()
 
         Retrofit.Builder()

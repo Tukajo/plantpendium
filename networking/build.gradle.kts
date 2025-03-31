@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -13,6 +15,15 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+        val properties =  Properties()
+        val localProps = File(rootProject.rootDir, "local.properties")
+        if(localProps.exists()) {
+            localProps.inputStream().use {
+                properties.load(it)
+            }
+        }
+        val floraApiKey = properties.getProperty("flora.api.key") ?: ""
+        buildConfigField("String", "FLORA_API_KEY", "\"$floraApiKey\"")
     }
 
     buildTypes {
@@ -30,6 +41,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 
