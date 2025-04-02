@@ -1,7 +1,8 @@
 package com.uptoncedar.list
 
-import com.uptoncedar.list.domain.GetPlantsByQueryUseCase
-import com.uptoncedar.list.domain.GetPlantsByQueryUseCaseImpl
+
+import com.uptoncedar.networking.data.FloraCodexRepository
+import com.uptoncedar.networking.data.FloraCodexRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,5 +15,6 @@ abstract class PlantListModule {
 
     @Binds
     @Singleton
-    abstract fun bindGetPlantsByQueryUseCase(getPlantsByQueryUseCase: GetPlantsByQueryUseCaseImpl): GetPlantsByQueryUseCase
+    abstract fun bindsFloraCodexRepository(floraCodexRepository: FloraCodexRepositoryImpl): FloraCodexRepository
+
 }

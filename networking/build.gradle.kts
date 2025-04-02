@@ -52,7 +52,6 @@ kapt {
 }
 
 dependencies {
-    // Other Projects
     implementation(project(":common"))
     api(libs.retrofit)
     implementation(libs.converter.gson)

@@ -41,7 +41,6 @@ kapt {
     correctErrorTypes = true
 }
 dependencies {
-    // Other Projects:
     implementation(project(":common"))
     implementation(project(":networking"))
 

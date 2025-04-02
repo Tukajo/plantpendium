@@ -1,8 +1,8 @@
 package com.uptoncedar.list.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.fillMaxSize
+
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,20 +19,16 @@ fun PlantListScreen(
     onNavigateToDetails: (plantId: String) -> Unit,
     viewModel: PlantListViewModel = hiltViewModel()
 ) {
-    val plants by viewModel.plants.collectAsStateWithLifecycle()
-
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     Column(modifier = modifier) {
-        SearchBar(
-            onSearchSubmit = {
-                viewModel.searchPlants(it)
-            })
-        LazyColumn {
-            items(plants) {
-                PlantCard(
-                    plantListEntry = it,
-                    onNavigateToDetails = onNavigateToDetails
-                )
-            }
+        Column(modifier = modifier.fillMaxSize()) {
+            SearchBar(
+                onSearchSubmit = viewModel::onPlantQuerySubmitted
+            )
+            PlantListContent(
+                uiState = uiState,
+                onNavigateToDetails = onNavigateToDetails,
+            )
         }
     }
 }

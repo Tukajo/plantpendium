@@ -39,7 +39,6 @@ kapt {
 }
 
 dependencies {
-    // Other Projects:
     implementation(project(":common"))
     implementation(project(":networking"))
 
