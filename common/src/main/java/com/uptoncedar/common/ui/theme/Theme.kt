@@ -1,4 +1,4 @@
-package com.uptoncedar.plantpendium.ui.theme
+package com.uptoncedar.common.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

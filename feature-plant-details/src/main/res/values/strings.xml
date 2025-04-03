@@ -8,4 +8,8 @@
     <string name="scientific_genus_field_label">Genus:</string>
     <string name="common_section_title">Common Information</string>
     <string name="common_name_field_label">Common Name:</string>
+    <string name="error_plant_not_found">Could not find details for this plant.</string>
+    <string name="error_network">Could not load details. Please check your connection.</string>
+    <string name="error_unknown">An unexpected error occurred. Please try again.</string>
+    <string name="error_prefix">Error: </string>
 </resources>

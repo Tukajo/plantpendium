@@ -19,7 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.uptoncedar.list.ui.PlantListScreen
 import com.uptoncedar.plant.details.ui.PlantDetailsScreen
-import com.uptoncedar.plantpendium.ui.theme.PlantpendiumTheme
+import com.uptoncedar.common.ui.theme.PlantpendiumTheme
 import dagger.hilt.android.AndroidEntryPoint
 import com.uptoncedar.plant.details.R as detailsR
 

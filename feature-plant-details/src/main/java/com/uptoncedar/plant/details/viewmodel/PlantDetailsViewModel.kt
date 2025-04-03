@@ -7,41 +7,47 @@ import com.uptoncedar.plant.details.domain.GetPlantByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.uptoncedar.plant.details.domain.PlantDetailsError
+
+/**
+ * Defines the possible states for the Plant Details UI.
+ */
+sealed interface PlantDetailsUiState {
+    /** Represents a successful state with plant details. */
+    data class Success(val plantDetails: PlantDetails) : PlantDetailsUiState
+
+    /** Represents an error state during data fetching. */
+    data class Error(val error: PlantDetailsError) : PlantDetailsUiState
+
+    /** Represents a state where data is currently being loaded. */
+    data object Loading : PlantDetailsUiState
+}
 
 @HiltViewModel
 class PlantDetailsViewModel @Inject constructor(
     private val getPlantByIdUseCase: GetPlantByIdUseCase
 ) : ViewModel() {
 
-    private val _plantDetails = MutableStateFlow<PlantDetails?>(null)
-    val plantDetails: StateFlow<PlantDetails?> = _plantDetails
+    private val _uiState =
+        MutableStateFlow<PlantDetailsUiState>(PlantDetailsUiState.Loading)
+    val uiState: StateFlow<PlantDetailsUiState> = _uiState.asStateFlow()
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading
-
-    private val _errorMessage = MutableStateFlow<String?>(null)
-    val errorMessage: StateFlow<String?> = _errorMessage
 
     fun fetchPlantDetails(plantId: String) {
+        _uiState.value = PlantDetailsUiState.Loading
         viewModelScope.launch {
-            _isLoading.update { true }
-            _errorMessage.update { null }
-            try {
-                val plant = getPlantByIdUseCase(plantId)
-                _plantDetails.update { plant }
-            } catch (e: Exception) {
-                _errorMessage.update { e.localizedMessage ?: "An unexpected error occurred" }
-                _plantDetails.update { null }
-            } finally {
-                _isLoading.update { false }
+            getPlantByIdUseCase(plantId).onSuccess {
+                _uiState.value = PlantDetailsUiState.Success(it)
+            }.onFailure { error ->
+                val uiError = when (error) {
+                    is PlantDetailsError -> error
+                    else -> PlantDetailsError.UnknownError(error)
+                }
+                _uiState.value = PlantDetailsUiState.Error(uiError)
             }
         }
-    }
-
-    fun clearError() {
-        _errorMessage.update { null }
     }
 }

@@ -9,144 +9,181 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.uptoncedar.common.ui.FillingImage
 import com.uptoncedar.plant.details.viewmodel.PlantDetailsViewModel
 import com.uptoncedar.plant.details.R
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.core.net.toUri
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.uptoncedar.common.model.PlantDetails
+import com.uptoncedar.common.ui.theme.Dimensions
+import com.uptoncedar.plant.details.domain.PlantDetailsError
+import com.uptoncedar.plant.details.viewmodel.PlantDetailsUiState
+
 
 @Composable
 fun PlantDetailsScreen(
     viewModel: PlantDetailsViewModel = hiltViewModel(), plantId: String
 ) {
-    val plantDetails by viewModel.plantDetails.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
-    val context = LocalContext.current
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(plantId) {
         viewModel.fetchPlantDetails(plantId)
     }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(Dimensions.PaddingMedium)
     ) {
-        when (isLoading) {
-            true -> CircularProgressIndicator()
-            else -> {
-                if (errorMessage != null) {
-                    Text(
-                        text = "Error: $errorMessage",
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    Button(onClick = { viewModel.clearError() }) {
-                        Text(stringResource(android.R.string.ok))
-                    }
-                } else if (plantDetails != null) {
-                    plantDetails?.main_species?.image_url?.let { imageUrl ->
+        when (uiState) {
+            is PlantDetailsUiState.Loading -> LoadingIndicator(modifier = Modifier.align(Alignment.Center))
+            is PlantDetailsUiState.Error -> ErrorView(
+                error = (uiState as PlantDetailsUiState.Error).error,
+                onRetry = { viewModel.fetchPlantDetails(plantId) },
+                modifier = Modifier.align(Alignment.Center)
+            )
 
-                        ElevatedCard(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 2.dp)
-                                .pointerInput(Unit) {
-                                    detectTapGestures(
-                                        onDoubleTap = {
-                                            val intent =
-                                                Intent(Intent.ACTION_VIEW, imageUrl.toUri())
-                                            context.startActivity(intent)
-                                        }
-                                    )
-                                },
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 8.dp
-                            )
-                        ) {
-                            FillingImage(
-                                imageUrl = imageUrl,
-                                imageDescription = plantDetails?.common_name,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(200.dp),
-                            )
-                        }
+            is PlantDetailsUiState.Success -> PlantDetailsContent(
+                plantDetails = (uiState as PlantDetailsUiState.Success).plantDetails
+            )
 
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}
 
-                    plantDetails?.common_name?.let {
-                        Card(modifier = Modifier.fillMaxWidth()) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(
-                                    text = stringResource(R.string.common_section_title),
-                                    style = MaterialTheme.typography.headlineSmall
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Row {
-                                    Text(
-                                        text = stringResource(R.string.common_name_field_label),
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(text = it, style = MaterialTheme.typography.bodyLarge)
-                                }
-                            }
-                        }
-                    }
-                    Card(modifier = Modifier.fillMaxWidth()) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(
-                                text = stringResource(R.string.scientific_classification_section_title),
-                                style = MaterialTheme.typography.headlineSmall
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            plantDetails?.scientific_name?.let {
-                                Row {
-                                    Text(
-                                        text = stringResource(R.string.scientific_name_field_label),
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(text = it, style = MaterialTheme.typography.bodyLarge)
-                                }
-                            }
-                            plantDetails?.main_species?.family?.let {
-                                Row {
-                                    Text(
-                                        text = stringResource(R.string.scientific_family_field_label),
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(text = it, style = MaterialTheme.typography.bodyLarge)
-                                }
-                            }
-                            plantDetails?.main_species?.genus?.let {
-                                Row {
-                                    Text(
-                                        text = stringResource(R.string.scientific_genus_field_label),
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(text = it, style = MaterialTheme.typography.bodyLarge)
-                                }
-                            }
-                        }
+@Composable
+fun LoadingIndicator(modifier: Modifier = Modifier) {
+    CircularProgressIndicator(modifier = modifier)
+}
 
-                    }
-                } else {
-                    Text(
-                        stringResource(R.string.no_plant_details_found_warning),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
+@Composable
+fun ErrorView(error: PlantDetailsError, onRetry: () -> Unit, modifier: Modifier = Modifier) {
+    val errorMessage = when (error) {
+        is PlantDetailsError.PlantNotFound -> stringResource(R.string.error_plant_not_found)
+        is PlantDetailsError.NetworkError -> stringResource(R.string.error_network)
+        is PlantDetailsError.UnknownError -> stringResource(R.string.error_unknown)
+    }
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = stringResource(R.string.error_prefix) + errorMessage,
+            color = MaterialTheme.colorScheme.error,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Spacer(modifier = Modifier.height(Dimensions.PaddingSmall))
+        Button(onClick = onRetry) {
+            Text(stringResource(android.R.string.ok))
+        }
+    }
+}
+
+@Composable
+fun PlantDetailsContent(
+    plantDetails: PlantDetails, modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Dimensions.PaddingMedium)
+    ) {
+        plantDetails.main_species.image_url.let { imageUrl ->
+            PlantImageCard(
+                imageUrl = imageUrl, description = plantDetails.common_name, onDoubleClick = {
+                    val intent = Intent(Intent.ACTION_VIEW, imageUrl.toUri())
+                    context.startActivity(intent)
+                })
+        }
+
+        CommonInfoCard(commonName = plantDetails.common_name)
+
+        ScientificInfoCard(
+            scientificName = plantDetails.scientific_name,
+            family = plantDetails.main_species.family,
+            genus = plantDetails.main_species.genus
+        )
+    }
+}
+
+
+@Composable
+fun PlantImageCard(
+    imageUrl: String, description: String?, onDoubleClick: () -> Unit, modifier: Modifier = Modifier
+) {
+    ElevatedCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .pointerInput(Unit) {
+                detectTapGestures(onDoubleTap = { onDoubleClick() })
+            }, elevation = CardDefaults.cardElevation(defaultElevation = Dimensions.CardElevation)
+    ) {
+        FillingImage(
+            imageUrl = imageUrl,
+            imageDescription = description,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(Dimensions.ImageHeight),
+        )
+    }
+}
+
+@Composable
+fun CommonInfoCard(commonName: String, modifier: Modifier = Modifier) {
+    Card(modifier = modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(Dimensions.PaddingMedium)) {
+            Text(
+                text = stringResource(R.string.common_section_title),
+                style = MaterialTheme.typography.headlineSmall
+            )
+            Spacer(modifier = Modifier.height(Dimensions.PaddingSmall))
+            InfoRow(label = stringResource(R.string.common_name_field_label), value = commonName)
+        }
+    }
+}
+
+@Composable
+fun ScientificInfoCard(
+    scientificName: String?, family: String?, genus: String?, modifier: Modifier = Modifier
+) {
+    Card(modifier = modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(Dimensions.PaddingMedium)) {
+            Text(
+                text = stringResource(R.string.scientific_classification_section_title),
+                style = MaterialTheme.typography.headlineSmall
+            )
+            Spacer(modifier = Modifier.height(Dimensions.PaddingSmall))
+            scientificName?.let {
+                InfoRow(
+                    label = stringResource(R.string.scientific_name_field_label), value = it
+                )
+            }
+            family?.let {
+                InfoRow(
+                    label = stringResource(R.string.scientific_family_field_label), value = it
+                )
+            }
+            genus?.let {
+                InfoRow(
+                    label = stringResource(R.string.scientific_genus_field_label), value = it
+                )
             }
         }
     }
+}
+
+@Composable
+fun InfoRow(label: String, value: String) {
+    Row {
+        Text(
+            text = label, style = MaterialTheme.typography.titleMedium
+        )
+        Spacer(modifier = Modifier.width(Dimensions.PaddingSmall))
+        Text(text = value, style = MaterialTheme.typography.bodyLarge)
+    }
+    Spacer(modifier = Modifier.height(Dimensions.PaddingSmall))
 }
